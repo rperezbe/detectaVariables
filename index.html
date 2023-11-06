@@ -24,9 +24,9 @@
                 alert("Please enter some text.");
                 return;
             }
-
+            //lo utilizamos para detectar los numeros
             const numberRegex = /\b\d+\b/g;
-
+            //en caso de que detecte un numero lo reemplaza por el mismo numero y le agrega ($number)
             const outputText = inputText.replace(numberRegex, (match) => {
                 return match + "($number)";
             });
