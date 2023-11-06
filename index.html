@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Detect Entities</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <h1>Detect Entities</h1>
@@ -26,29 +25,14 @@
                 return;
             }
 
-            // Define las entidades y sus etiquetas entre paréntesis
-            const entities = {
-                "oranges": "$fruit",
-                "apples": "$fruit",
-                "banannas": "$fruit",
-                "Spain": "$country",
-                "France": "$country",
-                "Italy": "$country",
-                "15": "$number",
-                "20": "$number",
-                "5": "$number"
-            };
+            const numberRegex = /\b\d+\b/g;
 
-            // Función para reemplazar palabras con etiquetas entre paréntesis
-            const replaceWithEntities = (match) => {
-                const entity = entities[match];
-                return entity ? `${match}(${entity})` : match;
-            };
+            const outputText = inputText.replace(numberRegex, (match) => {
+                return match + "($number)";
+            });
 
-            const outputText = inputText.replace(/\b\w+\b/g, replaceWithEntities);
             outputTextArea.value = outputText;
         }
     </script>
 </body>
 </html>
-
