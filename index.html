@@ -19,11 +19,12 @@
 
         function detectEntities() {
             //hacemos un fetch del documento system_entities.json y guardamos numero y colores
-            fetch('system_entities.json')
+            fetch('entities.json')
                 .then(response => response.json())
                 .then(data => {
-                    const countries = data.countries;
-                    const colores = data.colores;
+                    const countries = data.system.countries;
+                    const colores = data.system.colores;
+                    const continents = data.custom.continents;
                     const inputTextArea = document.getElementById("inputText");
                     const outputTextArea = document.getElementById("outputText");
 
@@ -39,9 +40,10 @@
 
                     //función para determinar si una palabra está en la lista de países
                     const isCountry = (word) => countries.includes(word);
-
                     //función para determinar si una palabra está en la lista de colores
                     const isColor = (word) => colores.includes(word);
+                    //función para determinar si una palabra está en la lista de colores
+                    const isContinent = (word) => continents.includes(word);
 
                     //añadir las etiquetas a las palabras
                     const outputText = words.map((word) => {
@@ -51,6 +53,8 @@
                             return word + "($country)";
                         } else if (isColor(word)) {
                             return word + "($color)";
+                        }else if (isContinent(word)) {
+                            return word + "($continent)";
                         } else {
                             return word;
                         }
