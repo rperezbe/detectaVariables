@@ -13,7 +13,8 @@
     <button onclick="detectEntities()">Detect Entities</button><br><br>
 
     <b>Output:</b><br>
-    <textarea id="outputText" rows="4" cols="50" readonly></textarea><br><br>
+    <!-- <textarea id="outputText" rows="4" cols="50" readonly></textarea><br><br> -->
+    <div id="outputText" style="white-space: pre-line;"></div><br><br>
 
     <script>
 
@@ -25,8 +26,9 @@
                     const countries = data.system.countries;
                     const colores = data.system.colores;
                     const continents = data.custom.continents;
+                    const airports = data.system.airports;
                     const inputTextArea = document.getElementById("inputText");
-                    const outputTextArea = document.getElementById("outputText");
+                    const outputDiv = document.getElementById("outputText");
 
                     const inputText = inputTextArea.value;
 
@@ -44,23 +46,37 @@
                     const isColor = (word) => colores.includes(word);
                     //función para determinar si una palabra está en la lista de colores
                     const isContinent = (word) => continents.includes(word);
+                    //función para determinar si una palabra está en la lista de aeropuertos
+                    const isAirport = (word) => airports.includes(word);
+
+                    //Definimos estilos para custom y no custom
+                    const customStyle = "color: red;";
+                    const noCustomStyle = "color: green;";
 
                     //añadir las etiquetas a las palabras
                     const outputText = words.map((word) => {
                         if (!isNaN(parseFloat(word))) {
-                            return word + "($number)";
+                            //return word + "($number)";
+                            return `<span style="${noCustomStyle}">${word}($number)</span>`;
                         } else if (isCountry(word)) {
-                            return word + "($country)";
+                            //return word + "($country)";
+                            return `<span style="${noCustomStyle}">${word}($country)</span>`;
                         } else if (isColor(word)) {
-                            return word + "($color)";
-                        }else if (isContinent(word)) {
-                            return word + "($continent)";
+                            //return word + "($color)";
+                            return `<span style="${noCustomStyle}">${word}($color)</span>`;
+                        } else if (isContinent(word)) {
+                            //return word + "($continent)";
+                            return `<span style="${customStyle}">${word}($continent)</span>`;
+                        } else if (isAirport(word)) {
+                            //return word + "($airport)";
+                            return `<span style="${noCustomStyle}">${word}($airport)</span>`;
                         } else {
                             return word;
                         }
                     }).join(" ");
 
-                    outputTextArea.value = outputText;
+                    //outputTextArea.value = outputText;
+                    outputDiv.innerHTML = outputText;
                 });
         }
     </script>
