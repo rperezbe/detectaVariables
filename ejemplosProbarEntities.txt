@@ -1,4 +1,22 @@
-Actualmente tenemos 10 system y 3 custom.
+Actualmente tenemos 10 system y 5 custom.
+Entities Custom:
+- Continent: $continent
+- Car Brand: $carBrand
+- Clothing Brand: $clothingBrand
+- CIF: $cif
+- DNI: $dni
+
+Entities System:
+- Country: $country
+- Color: $color
+- Airport: $airport
+- Language: $language
+- Phone Number: $phone
+- Percentage: $percentage
+- Date: $date
+- Number: $number
+- Email: $email
+- URL: $url
 
 Ejemplos:
 Europe 1 red Spain B12345678 12345678Y Tesla Zara
