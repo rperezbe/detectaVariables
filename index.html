@@ -27,6 +27,7 @@
                     const colores = data.system.colores;
                     const continents = data.custom.continents;
                     const airports = data.system.airports;
+                    const languages = data.system.languages;
                     const inputTextArea = document.getElementById("inputText");
                     const outputDiv = document.getElementById("outputText");
 
@@ -48,28 +49,82 @@
                     const isContinent = (word) => continents.includes(word);
                     //función para determinar si una palabra está en la lista de aeropuertos
                     const isAirport = (word) => airports.includes(word);
+                    //función para determinar si una palabra está en la lista de idiomas
+                    const isLanguage = (word) => languages.includes(word);
 
-                    //Definimos estilos para custom y no custom
+                    //expresiones regulares
+                    //mails
+                    const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
+                    //url que permita https o http o www
+                    const urlRegex = /((https?:\/\/)|(www\.))[^\s]+/;
+                    //números de teléfono 
+                    const phoneNumberRegex = /^(\+?\d{1,4}[\s-]?)?(\d{9,})$/;
+                    //fechas tanto con guiones como con barras	ej: 31-10-23 31/10/23 o 31-10-2023 31/10/2023
+                    const dateRegex = /\b(?:0[1-9]|[12][0-9]|3[01])[-\/](?:0[1-9]|1[0-2])[-\/](?:19|20)?\d{2}\b/;
+                    //CIF empresas ej: B12345678
+                    const cifRegex = /\b[A-Z]\d{8}\b/;
+                    //DNI personas ej: 12345678Y
+                    const dniRegex = /\b\d{8}[A-Z]\b/;
+                    
+                    //definimos estilos para custom y no custom
                     const customStyle = "color: red;";
                     const noCustomStyle = "color: green;";
 
                     //añadir las etiquetas a las palabras
                     const outputText = words.map((word) => {
-                        if (!isNaN(parseFloat(word))) {
+                        if (isContinent(word)) {
+                            //detectar si es continente
+                            return `<span style="${customStyle}">${word}($continent)</span>`;
+
+                        } else if(word.match(cifRegex)) {
+                            //detectar si es cif
+                            return `<span style="${customStyle}">${word}($cif)</span>`;
+
+                        } else if(word.match(dniRegex)) {
+                            //detectar si es dni
+                            return `<span style="${customStyle}">${word}($dni)</span>`;
+
+                        } else if (word.match(phoneNumberRegex)) {
+                            //detectar si es número de teléfono
+                            return `<span style="${noCustomStyle}">${word}($phone)</span>`;
+
+                        } else if (word.includes('%')) {
+                            //detectar si es porcentaje
+                            return `<span style="${noCustomStyle}">${word}($percentage)</span>`;
+                            
+                        } else if (word.match(dateRegex)) {
+                            //detectar si es fecha
+                            return `<span style="${noCustomStyle}">${word}($date)</span>`;
+
+                        } else if (!isNaN(parseFloat(word))) {
+                            //detectar si es número
                             //return word + "($number)";
                             return `<span style="${noCustomStyle}">${word}($number)</span>`;
+
                         } else if (isCountry(word)) {
-                            //return word + "($country)";
+                            //detectar si es país
                             return `<span style="${noCustomStyle}">${word}($country)</span>`;
+
                         } else if (isColor(word)) {
-                            //return word + "($color)";
+                            //detectar si es color
                             return `<span style="${noCustomStyle}">${word}($color)</span>`;
-                        } else if (isContinent(word)) {
-                            //return word + "($continent)";
-                            return `<span style="${customStyle}">${word}($continent)</span>`;
+
                         } else if (isAirport(word)) {
-                            //return word + "($airport)";
+                            //detectar si es aeropuerto
                             return `<span style="${noCustomStyle}">${word}($airport)</span>`;
+
+                        } else if (isLanguage(word)) {
+                            //detectar si es idioma
+                            return `<span style="${noCustomStyle}">${word}($language)</span>`;
+
+                        } else if (word.match(emailRegex)) {
+                            //detectar si es email
+                            return `<span style="${noCustomStyle}">${word}($email)</span>`;
+
+                        } else if (word.match(urlRegex)) {
+                            //detectar si es url
+                            return `<span style="${noCustomStyle}">${word}($url)</span>`;
+                            
                         } else {
                             return word;
                         }
