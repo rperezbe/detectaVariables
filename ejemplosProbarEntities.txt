@@ -1,4 +1,12 @@
-Actualmente tenemos 10 system y 5 custom.
+Ejemplos:
+Europe 1 red Spain B12345678 12345678Y Tesla Zara
+
+Falta:
+Controlar UpperCase
+Controlar espacios, ej United States
+Todos las entities restantes
+
+Actualmente tenemos las siguientes entidades (5 custom y 10 system)
 Entities Custom:
 - Continent: $continent
 - Car Brand: $carBrand
@@ -17,11 +25,3 @@ Entities System:
 - Number: $number
 - Email: $email
 - URL: $url
-
-Ejemplos:
-Europe 1 red Spain B12345678 12345678Y Tesla Zara
-
-Falta:
-Controlar UpperCase
-Controlar espacios, ej United States
-Todos las entities restantes
