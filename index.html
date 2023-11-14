@@ -25,6 +25,7 @@
                 .then(data => {
                     const continents = data.custom.continents;
                     const carBrands = data.custom.carBrands;
+                    const clothingBrands = data.custom.clothingBrands;
                     const countries = data.system.countries;
                     const colores = data.system.colores;
                     const airports = data.system.airports;
@@ -46,6 +47,8 @@
                     const isCountry = (word) => countries.includes(word);
                     //función para determinar si una palabra está en la lista de marcas de coche
                     const isCarBrand = (word) => carBrands.includes(word);
+                    //función para determinar si una palabra está en la lista de marcas de ropa
+                    const isClothingBrand = (word) => clothingBrands.includes(word);
                     //función para determinar si una palabra está en la lista de colores
                     const isColor = (word) => colores.includes(word);
                     //función para determinar si una palabra está en la lista de colores
@@ -80,9 +83,13 @@
                             //detectar si es continente
                             return `<span style="${customStyle}">${word}($continent)</span>`;
 
-                        }else if(isCarBrand(word)) {
+                        } else if(isCarBrand(word)) {
                             //detectar si es alguna marca de coche
                             return `<span style="${customStyle}">${word}($carBrand)</span>`;
+
+                        } else if(isClothingBrand(word)) {
+                            //detectar si es alguna marca de ropa
+                            return `<span style="${customStyle}">${word}($clothingBrand)</span>`;
 
                         } else if(word.match(cifRegex)) {
                             //detectar si es cif
