@@ -23,9 +23,10 @@
             fetch('entities.json')
                 .then(response => response.json())
                 .then(data => {
+                    const continents = data.custom.continents;
+                    const carBrands = data.custom.carBrands;
                     const countries = data.system.countries;
                     const colores = data.system.colores;
-                    const continents = data.custom.continents;
                     const airports = data.system.airports;
                     const languages = data.system.languages;
                     const inputTextArea = document.getElementById("inputText");
@@ -51,6 +52,8 @@
                     const isAirport = (word) => airports.includes(word);
                     //función para determinar si una palabra está en la lista de idiomas
                     const isLanguage = (word) => languages.includes(word);
+                    //función para determinar si una palabra está en la lista de marcas de coche
+                    const isCarBrand = (word) => carBrands.includes(word);
 
                     //expresiones regulares
                     //mails
@@ -65,7 +68,7 @@
                     const cifRegex = /\b[A-Z]\d{8}\b/;
                     //DNI personas ej: 12345678Y
                     const dniRegex = /\b\d{8}[A-Z]\b/;
-                    
+
                     //definimos estilos para custom y no custom
                     const customStyle = "color: red;";
                     const noCustomStyle = "color: green;";
@@ -75,6 +78,10 @@
                         if (isContinent(word)) {
                             //detectar si es continente
                             return `<span style="${customStyle}">${word}($continent)</span>`;
+
+                        }else if(isCarBrand(word)) {
+                            //detectar si es alguna marca de coche
+                            return `<span style="${customStyle}">${word}($carBrand)</span>`;
 
                         } else if(word.match(cifRegex)) {
                             //detectar si es cif
