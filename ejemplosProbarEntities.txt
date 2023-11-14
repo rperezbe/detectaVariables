@@ -1,1 +1,9 @@
+Actualmente tenemos 10 system y 3 custom.
+
+Ejemplos:
 Europe 1 red Spain B12345678 12345678Y
+
+Falta:
+Controlar UpperCase
+Controlar espacios, ej United States
+Todos las entities restantes
