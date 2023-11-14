@@ -44,6 +44,8 @@
 
                     //función para determinar si una palabra está en la lista de países
                     const isCountry = (word) => countries.includes(word);
+                    //función para determinar si una palabra está en la lista de marcas de coche
+                    const isCarBrand = (word) => carBrands.includes(word);
                     //función para determinar si una palabra está en la lista de colores
                     const isColor = (word) => colores.includes(word);
                     //función para determinar si una palabra está en la lista de colores
@@ -52,10 +54,12 @@
                     const isAirport = (word) => airports.includes(word);
                     //función para determinar si una palabra está en la lista de idiomas
                     const isLanguage = (word) => languages.includes(word);
-                    //función para determinar si una palabra está en la lista de marcas de coche
-                    const isCarBrand = (word) => carBrands.includes(word);
-
+                    
                     //expresiones regulares
+                    //CIF empresas ej: B12345678
+                    const cifRegex = /\b[A-Z]\d{8}\b/;
+                    //DNI personas ej: 12345678Y
+                    const dniRegex = /\b\d{8}[A-Z]\b/;
                     //mails
                     const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
                     //url que permita https o http o www
@@ -64,10 +68,7 @@
                     const phoneNumberRegex = /^(\+?\d{1,4}[\s-]?)?(\d{9,})$/;
                     //fechas tanto con guiones como con barras	ej: 31-10-23 31/10/23 o 31-10-2023 31/10/2023
                     const dateRegex = /\b(?:0[1-9]|[12][0-9]|3[01])[-\/](?:0[1-9]|1[0-2])[-\/](?:19|20)?\d{2}\b/;
-                    //CIF empresas ej: B12345678
-                    const cifRegex = /\b[A-Z]\d{8}\b/;
-                    //DNI personas ej: 12345678Y
-                    const dniRegex = /\b\d{8}[A-Z]\b/;
+                    
 
                     //definimos estilos para custom y no custom
                     const customStyle = "color: red;";
