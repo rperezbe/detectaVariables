@@ -15,7 +15,8 @@
     <b>Output:</b><br>
     <!-- <textarea id="outputText" rows="4" cols="50" readonly></textarea><br><br> -->
     <div id="outputText" style="white-space: pre-line;"></div><br><br>
-
+    <script src="convertToAbbreviations.js"></script>
+    <script src="wordsToNumbers.js"></script>
     <script>
 
         function detectEntities() {
@@ -27,9 +28,17 @@
                     const carBrands = data.custom.carBrands;
                     const clothingBrands = data.custom.clothingBrands;
                     const countries = data.system.countries;
-                    const colores = data.system.colores;
+                    const countryCapitals = data.system.countryCapitals;
+                    const usaStates = data.system.usaStates;
+                    const colors = data.system.colors;
                     const airports = data.system.airports;
                     const languages = data.system.languages;
+                    const unitsLength = data.system.unitsLength;
+                    const unitsWeight = data.system.unitsWeight;
+                    const unitsSpeed = data.system.unitsSpeed;
+                    const unitsArea = data.system.unitsArea;
+                    const unitsVolume = data.system.unitsVolume;
+                    const unitsInformation = data.system.unitsInformation;
                     const inputTextArea = document.getElementById("inputText");
                     const outputDiv = document.getElementById("outputText");
 
@@ -39,25 +48,40 @@
                         alert("Please enter some text.");
                         return;
                     }
-
-                    //dividimos el texto en palabras
-                    const words = inputText.split(/\s+/);
+                    ;
 
                     //función para determinar si una palabra está en la lista de países
-                    const isCountry = (word) => countries.includes(word);
+                    const isCountry = (word) => countries.map(country => country.toLowerCase()).includes(word.toLowerCase());
+                    //función para determinar si una palabra está en la lista de capitales
+                    const isCountryCapital = (word) => countryCapitals.map(countryCapital => countryCapital.toLowerCase()).includes(word.toLowerCase());
+                    //función para determinar si una palabra está en la lista de estados de EEUU
+                    const isUsaState = (word) => usaStates.map(usaState => usaState.toLowerCase()).includes(word.toLowerCase());
                     //función para determinar si una palabra está en la lista de marcas de coche
-                    const isCarBrand = (word) => carBrands.includes(word);
+                    const isCarBrand = (word) => carBrands.map(carBrand => carBrand.toLowerCase()).includes(word.toLowerCase());
                     //función para determinar si una palabra está en la lista de marcas de ropa
-                    const isClothingBrand = (word) => clothingBrands.includes(word);
+                    const isClothingBrand = (word) => clothingBrands.map(clothingBrand => clothingBrand.toLowerCase()).includes(word.toLowerCase());
                     //función para determinar si una palabra está en la lista de colores
-                    const isColor = (word) => colores.includes(word);
-                    //función para determinar si una palabra está en la lista de colores
-                    const isContinent = (word) => continents.includes(word);
+                    const isColor = (word) => colors.map(color => color.toLowerCase()).includes(word.toLowerCase());
+                    //función para determinar si una palabra está en la lista de continentes
+                    const isContinent = (word) => continents.map(continent => continent.toLowerCase()).includes(word.toLowerCase());
                     //función para determinar si una palabra está en la lista de aeropuertos
                     const isAirport = (word) => airports.includes(word);
                     //función para determinar si una palabra está en la lista de idiomas
-                    const isLanguage = (word) => languages.includes(word);
-                    
+                    const isLanguage = (word) => languages.map(language => language.toLowerCase()).includes(word.toLowerCase());
+                    //función para determinar si una palabra está en la lista de unidades de longitud
+                    const isUnitLength = (word) => unitsLength.map(unitLength => unitLength.toLowerCase()).includes(word.toLowerCase());
+                    //función para determinar si una palabra está en la lista de unidades de peso
+                    const isUnitWeight = (word) => unitsWeight.map(unitWeight => unitWeight.toLowerCase()).includes(word.toLowerCase());
+                    //función para determinar si una palabra está en la lista de unidades de velocidad
+                    const isUnitSpeed = (word) => unitsSpeed.map(unitSpeed => unitSpeed.toLowerCase()).includes(word.toLowerCase());
+                    //función para determinar si una palabra está en la lista de unidades de área
+                    const isUnitArea = (word) => unitsArea.map(unitArea => unitArea.toLowerCase()).includes(word.toLowerCase());
+                    //función para determinar si una palabra está en la lista de unidades de volumen
+                    const isUnitVolume = (word) => unitsVolume.map(unitVolume => unitVolume.toLowerCase()).includes(word.toLowerCase());
+                    //función para determinar si una palabra está en la lista de unidades de información (datos)
+                    const isUnitInformation = (word) => unitsInformation.includes(word);
+
+
                     //expresiones regulares
                     //CIF empresas ej: B12345678
                     const cifRegex = /\b[A-Z]\d{8}\b/;
@@ -71,7 +95,13 @@
                     const phoneNumberRegex = /^(\+?\d{1,4}[\s-]?)?(\d{9,})$/;
                     //fechas tanto con guiones como con barras	ej: 31-10-23 31/10/23 o 31-10-2023 31/10/2023
                     const dateRegex = /\b(?:0[1-9]|[12][0-9]|3[01])[-\/](?:0[1-9]|1[0-2])[-\/](?:19|20)?\d{2}\b/;
-                    
+
+                    const abbreviatedText = convertToAbbreviation(inputText);
+                    const convertedText = wordsToNumbers(abbreviatedText);
+
+                    //dividimos el texto en palabras
+                    const words = convertedText.split(/\s+/);
+                    //const words = convertedText.split(/\s+|[\.;,!?]+/);
 
                     //definimos estilos para custom y no custom
                     const customStyle = "color: red;";
@@ -79,34 +109,37 @@
 
                     //añadir las etiquetas a las palabras
                     const outputText = words.map((word) => {
-                        if (isContinent(word)) {
+                        //limpiar la palabra de signos de puntuación
+                        let wordClean = word.replace(/[.,;!?]+$/, '');
+
+                        if (isContinent(wordClean)) {
                             //detectar si es continente
                             return `<span style="${customStyle}">${word}($continent)</span>`;
 
-                        } else if(isCarBrand(word)) {
+                        } else if (isCarBrand(wordClean)) {
                             //detectar si es alguna marca de coche
                             return `<span style="${customStyle}">${word}($carBrand)</span>`;
 
-                        } else if(isClothingBrand(word)) {
+                        } else if (isClothingBrand(wordClean)) {
                             //detectar si es alguna marca de ropa
                             return `<span style="${customStyle}">${word}($clothingBrand)</span>`;
 
-                        } else if(word.match(cifRegex)) {
+                        } else if (word.match(cifRegex)) {
                             //detectar si es cif
                             return `<span style="${customStyle}">${word}($cif)</span>`;
 
-                        } else if(word.match(dniRegex)) {
+                        } else if (word.match(dniRegex)) {
                             //detectar si es dni
                             return `<span style="${customStyle}">${word}($dni)</span>`;
 
-                        } else if (word.match(phoneNumberRegex)) {
+                        } else if (wordClean.match(phoneNumberRegex)) {
                             //detectar si es número de teléfono
                             return `<span style="${noCustomStyle}">${word}($phone)</span>`;
 
                         } else if (word.includes('%')) {
                             //detectar si es porcentaje
                             return `<span style="${noCustomStyle}">${word}($percentage)</span>`;
-                            
+
                         } else if (word.match(dateRegex)) {
                             //detectar si es fecha
                             return `<span style="${noCustomStyle}">${word}($date)</span>`;
@@ -116,21 +149,53 @@
                             //return word + "($number)";
                             return `<span style="${noCustomStyle}">${word}($number)</span>`;
 
-                        } else if (isCountry(word)) {
+                        } else if (isCountry(wordClean)) {
                             //detectar si es país
                             return `<span style="${noCustomStyle}">${word}($country)</span>`;
 
-                        } else if (isColor(word)) {
+                        } else if (isCountryCapital(wordClean)) {
+                            //detectar si es capital
+                            return `<span style="${noCustomStyle}">${word}($countryCapital)</span>`;
+
+                        } else if (isUsaState(wordClean)) {
+                            //detectar si es estado de EEUU
+                            return `<span style="${noCustomStyle}">${word}($usaState)</span>`;
+
+                        } else if (isColor(wordClean)) {
                             //detectar si es color
                             return `<span style="${noCustomStyle}">${word}($color)</span>`;
 
-                        } else if (isAirport(word)) {
+                        } else if (isAirport(wordClean)) {
                             //detectar si es aeropuerto
                             return `<span style="${noCustomStyle}">${word}($airport)</span>`;
 
-                        } else if (isLanguage(word)) {
+                        } else if (isLanguage(wordClean)) {
                             //detectar si es idioma
                             return `<span style="${noCustomStyle}">${word}($language)</span>`;
+
+                        } else if (isUnitLength(wordClean)) {
+                            //detectar si es unidad de longitud
+                            return `<span style="${noCustomStyle}">${word}($unitLength)</span>`;
+
+                        } else if (isUnitWeight(wordClean)) {
+                            //detectar si es unidad de peso
+                            return `<span style="${noCustomStyle}">${word}($unitWeight)</span>`;
+
+                        } else if (isUnitSpeed(wordClean)) {
+                            //detectar si es unidad de velocidad
+                            return `<span style="${noCustomStyle}">${word}($unitSpeed)</span>`;
+
+                        } else if (isUnitArea(wordClean)) {
+                            //detectar si es unidad de área
+                            return `<span style="${noCustomStyle}">${word}($unitArea)</span>`;
+
+                        } else if (isUnitVolume(wordClean)) {
+                            //detectar si es unidad de volumen
+                            return `<span style="${noCustomStyle}">${word}($unitVolume)</span>`;
+                            
+                        } else if (isUnitInformation(wordClean)) {
+                            //detectar si es unidad de información (datos)
+                            return `<span style="${noCustomStyle}">${word}($unitInformation)</span>`;
 
                         } else if (word.match(emailRegex)) {
                             //detectar si es email
@@ -139,7 +204,7 @@
                         } else if (word.match(urlRegex)) {
                             //detectar si es url
                             return `<span style="${noCustomStyle}">${word}($url)</span>`;
-                            
+
                         } else {
                             return word;
                         }
@@ -149,6 +214,7 @@
                     outputDiv.innerHTML = outputText;
                 });
         }
+
     </script>
 </body>
 

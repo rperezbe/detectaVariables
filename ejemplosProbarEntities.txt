@@ -3,7 +3,7 @@ Europe 1 red Spain B12345678 12345678Y Tesla Zara
 
 Falta:
 Controlar UpperCase
-Controlar espacios, ej United States
+Controlar espacios, ej United States (convertir a abreviaciones como United States -> USA)
 Todos las entities restantes
 
 Actualmente tenemos las siguientes entidades (5 custom y 10 system)
@@ -16,9 +16,17 @@ Entities Custom:
 
 Entities System:
 - Country: $country
+- Country Capital: $countryCapital
+- USA States: $usaState
 - Color: $color
 - Airport: $airport
 - Language: $language
+- Unit length: $unitLength
+- Unit Weight: $unitWeight
+- Unit Speed: $unitSpeed
+- Unit Area: $unitArea
+- Unit Volume: $unitVolume
+- Unit Information: $unitInformation
 - Phone Number: $phone
 - Percentage: $percentage
 - Date: $date
