@@ -1,18 +1,27 @@
-Ejemplos:
-Europe 1 red Spain B12345678 12345678Y Tesla Zara
+Examples to try
 
-Falta:
-Controlar UpperCase
-Controlar espacios, ej United States (convertir a abreviaciones como United States -> USA)
-Todos las entities restantes
+"In the United States, I had the chance to drive a Toyota through the scenic landscapes of green fields in California. The car's speedometer displayed both 60 mph and 100 km/h. The experience was unforgettable."
 
-Actualmente tenemos las siguientes entidades (5 custom y 10 system)
+"Hi there! My name is José and I'm a native Spanish speaker from Madrid. I'm also proficient in English and would love to help you with your lessons. You can reach me at josemaria@gmail.com or call me at  655909341. My ID is 12345678A. I look forward to hearing from you soon!"
+
+"Going to North America, I'll be flying the continent from JFK to YUL, immersing myself in the fashion scene, culminating on 22-12-2023 with the grand finale - the Gucci Winter Fashion Show. For more details, head over to https://www.gucci.com."
+
+"The towering giraffe, native to the Africa savanna, can grow up to eighteen feet tall and weigh up to thirteen thousand pounds. It is the tallest living terrestrial animal on Earth. Despite their immense size, these gentle giants maintain an herbivorous diet. They can eat fruits such as tamarind, wild figs, dates and even the occasional banana."
+
+"While developing a Java application, I managed a substantial dataset of 10 terabytes, ensuring adherence to the company's CIF code B12345678. In the optimization phase, I improved the code's efficiency, resulting in a 15% reduction in processing time. The dataset represented information from an area spanning approximately 8,611 square feet."
+
+
 Entities Custom:
 - Continent: $continent
 - Car Brand: $carBrand
 - Clothing Brand: $clothingBrand
 - CIF: $cif
 - DNI: $dni
+- Planets: $planet
+- Programming Language: $programmingLanguage
+- Season: $season
+- Fruit: $fruit
+- Animal: $animal
 
 Entities System:
 - Country: $country

@@ -9,7 +9,7 @@
     <h1>Detect Entities</h1>
     <b>Enter the text:</b><br>
     <textarea id="inputText" rows="4" cols="50" placeholder="Enter text"></textarea><br><br>
-
+    <button onclick="showExamples()">Show Example</button>
     <button onclick="detectEntities()">Detect Entities</button><br><br>
 
     <b>Output:</b><br>
@@ -27,6 +27,11 @@
                     const continents = data.custom.continents;
                     const carBrands = data.custom.carBrands;
                     const clothingBrands = data.custom.clothingBrands;
+                    const planets = data.custom.planets;
+                    const programmingLanguages = data.custom.programmingLanguages;
+                    const seasons = data.custom.seasons;
+                    const fruits = data.custom.fruits;
+                    const animals = data.custom.animals;
                     const countries = data.system.countries;
                     const countryCapitals = data.system.countryCapitals;
                     const usaStates = data.system.usaStates;
@@ -60,6 +65,16 @@
                     const isCarBrand = (word) => carBrands.map(carBrand => carBrand.toLowerCase()).includes(word.toLowerCase());
                     //función para determinar si una palabra está en la lista de marcas de ropa
                     const isClothingBrand = (word) => clothingBrands.map(clothingBrand => clothingBrand.toLowerCase()).includes(word.toLowerCase());
+                    //función para determinar si una palabra está en la lista de planetas
+                    const isPlanet = (word) => planets.map(planet => planet.toLowerCase()).includes(word.toLowerCase());
+                    //función para determinar si una palabra está en la lista de lenguajes de programación
+                    const isProgrammingLanguage = (word) => programmingLanguages.map(programmingLanguage => programmingLanguage.toLowerCase()).includes(word.toLowerCase());
+                    //función para determinar si una palabra está en la lista de estaciones
+                    const isSeason = (word) => seasons.map(season => season.toLowerCase()).includes(word.toLowerCase());
+                    //función para determinar si una palabra está en la lista de frutas
+                    const isFruit = (word) => fruits.map(fruit => fruit.toLowerCase()).includes(word.toLowerCase());
+                    //función para determinar si una palabra está en la lista de animales
+                    const isAnimal = (word) => animals.map(animal => animal.toLowerCase()).includes(word.toLowerCase());
                     //función para determinar si una palabra está en la lista de colores
                     const isColor = (word) => colors.map(color => color.toLowerCase()).includes(word.toLowerCase());
                     //función para determinar si una palabra está en la lista de continentes
@@ -81,7 +96,8 @@
                     //función para determinar si una palabra está en la lista de unidades de información (datos)
                     const isUnitInformation = (word) => unitsInformation.includes(word);
 
-
+                    //variable para saber si la palabra está precedida de un número
+                    let precededByNumber = false;
                     //expresiones regulares
                     //CIF empresas ej: B12345678
                     const cifRegex = /\b[A-Z]\d{8}\b/;
@@ -114,95 +130,142 @@
 
                         if (isContinent(wordClean)) {
                             //detectar si es continente
+                            precededByNumber = false;
                             return `<span style="${customStyle}">${word}($continent)</span>`;
 
                         } else if (isCarBrand(wordClean)) {
                             //detectar si es alguna marca de coche
+                            precededByNumber = false;
                             return `<span style="${customStyle}">${word}($carBrand)</span>`;
 
                         } else if (isClothingBrand(wordClean)) {
                             //detectar si es alguna marca de ropa
+                            precededByNumber = false;
                             return `<span style="${customStyle}">${word}($clothingBrand)</span>`;
 
                         } else if (word.match(cifRegex)) {
                             //detectar si es cif
+                            precededByNumber = false;
                             return `<span style="${customStyle}">${word}($cif)</span>`;
 
                         } else if (word.match(dniRegex)) {
                             //detectar si es dni
+                            precededByNumber = false;
                             return `<span style="${customStyle}">${word}($dni)</span>`;
+
+                        } else if (isPlanet(wordClean)) {
+                            //detectar si es planeta
+                            precededByNumber = false;
+                            return `<span style="${customStyle}">${word}($planet)</span>`;
+
+                        } else if (isProgrammingLanguage(wordClean)) {
+                            //detectar si es lenguaje de programación
+                            precededByNumber = false;
+                            return `<span style="${customStyle}">${word}($programmingLanguage)</span>`;
+
+                        } else if (isSeason(wordClean)) {
+                            //detectar si es estación
+                            precededByNumber = false;
+                            return `<span style="${customStyle}">${word}($season)</span>`;
+
+                        } else if (isFruit(wordClean)) {
+                            //detectar si es fruta
+                            precededByNumber = false;
+                            return `<span style="${customStyle}">${word}($fruit)</span>`;
+
+                        } else if (isAnimal(wordClean)) {
+                            //detectar si es animal
+                            precededByNumber = false;
+                            return `<span style="${customStyle}">${word}($animal)</span>`;
 
                         } else if (wordClean.match(phoneNumberRegex)) {
                             //detectar si es número de teléfono
+                            precededByNumber = true;
                             return `<span style="${noCustomStyle}">${word}($phone)</span>`;
 
                         } else if (word.includes('%')) {
                             //detectar si es porcentaje
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($percentage)</span>`;
 
                         } else if (word.match(dateRegex)) {
                             //detectar si es fecha
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($date)</span>`;
 
                         } else if (!isNaN(parseFloat(word))) {
                             //detectar si es número
-                            //return word + "($number)";
+                            precededByNumber = true;
                             return `<span style="${noCustomStyle}">${word}($number)</span>`;
 
                         } else if (isCountry(wordClean)) {
                             //detectar si es país
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($country)</span>`;
 
                         } else if (isCountryCapital(wordClean)) {
                             //detectar si es capital
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($countryCapital)</span>`;
 
                         } else if (isUsaState(wordClean)) {
                             //detectar si es estado de EEUU
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($usaState)</span>`;
 
                         } else if (isColor(wordClean)) {
                             //detectar si es color
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($color)</span>`;
 
                         } else if (isAirport(wordClean)) {
                             //detectar si es aeropuerto
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($airport)</span>`;
 
                         } else if (isLanguage(wordClean)) {
                             //detectar si es idioma
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($language)</span>`;
 
-                        } else if (isUnitLength(wordClean)) {
+                        } else if (isUnitLength(wordClean) && precededByNumber) {
                             //detectar si es unidad de longitud
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($unitLength)</span>`;
 
-                        } else if (isUnitWeight(wordClean)) {
+                        } else if (isUnitWeight(wordClean) && precededByNumber) {
                             //detectar si es unidad de peso
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($unitWeight)</span>`;
 
-                        } else if (isUnitSpeed(wordClean)) {
+                        } else if (isUnitSpeed(wordClean) && precededByNumber) {
                             //detectar si es unidad de velocidad
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($unitSpeed)</span>`;
 
-                        } else if (isUnitArea(wordClean)) {
+                        } else if (isUnitArea(wordClean) && precededByNumber) {
                             //detectar si es unidad de área
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($unitArea)</span>`;
 
-                        } else if (isUnitVolume(wordClean)) {
+                        } else if (isUnitVolume(wordClean) && precededByNumber) {
                             //detectar si es unidad de volumen
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($unitVolume)</span>`;
                             
-                        } else if (isUnitInformation(wordClean)) {
+                        } else if (isUnitInformation(wordClean) && precededByNumber) {
                             //detectar si es unidad de información (datos)
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($unitInformation)</span>`;
 
                         } else if (word.match(emailRegex)) {
                             //detectar si es email
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($email)</span>`;
 
                         } else if (word.match(urlRegex)) {
                             //detectar si es url
+                            precededByNumber = false;
                             return `<span style="${noCustomStyle}">${word}($url)</span>`;
 
                         } else {
@@ -210,10 +273,31 @@
                         }
                     }).join(" ");
 
-                    //outputTextArea.value = outputText;
                     outputDiv.innerHTML = outputText;
                 });
         }
+
+        //función para mostrar ejemplos para detectar entidades
+        function showExamples(){
+            const inputTextArea = document.getElementById("inputText");
+            const random = Math.floor(Math.random() * 5);
+            switch (random) {
+                case 0:
+                    inputTextArea.value = "In the United States, I had the chance to drive a Toyota through the scenic landscapes of green fields in California. The car's speedometer displayed both 60 mph and one 100 km/h. The experience was unforgettable."
+                    break; 
+                case 1:
+                    inputTextArea.value = "Hi there! My name is José and I'm a native Spanish speaker from Madrid. I'm also proficient in English and would love to help you with your lessons. You can reach me at josemaria@gmail.com or call me at  655909341. My ID is 12345678A. I look forward to hearing from you soon!"
+                    break;
+                case 2:
+                    inputTextArea.value = "Going to North America, I'll be flying the continent from JFK to YUL, immersing myself in the fashion scene, culminating on 22-12-2023 with the grand finale - the Gucci Winter Fashion Show. For more details, head over to https://www.gucci.com."
+                    break;
+                case 3:
+                    inputTextArea.value = "The towering giraffe, native to the Africa savanna, can grow up to eighteen feet tall and weigh up to thirteen thousand pounds. It is the tallest living terrestrial animal on Earth. Despite their immense size, these gentle giants maintain an herbivorous diet. They can eat fruits such as tamarind, wild figs, dates and even the occasional banana."
+                    break;
+                case 4:
+                    inputTextArea.value = "While developing a Java application, I managed a substantial dataset of 10 terabytes, ensuring adherence to the company's CIF code B12345678. In the optimization phase, I improved the code's efficiency, resulting in a 15% reduction in processing time. The dataset represented information from an area spanning approximately 8,611 square feet."
+                    break;
+        }}
 
     </script>
 </body>
